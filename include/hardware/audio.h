@@ -646,7 +646,12 @@ struct audio_hw_device {
      * See also get_buffer_size which is for a particular stream.
      */
     size_t (*get_input_buffer_size)(const struct audio_hw_device *dev,
+#ifndef ICS_AUDIO_BLOB
                                     const struct audio_config *config);
+#else
+                                    uint32_t sample_rate, int format,
+                                    int channel_count);
+#endif
 
     /** This method creates and opens the audio hardware output stream.
      * The "address" parameter qualifies the "devices" audio device type if needed.
@@ -655,7 +660,7 @@ struct audio_hw_device {
      * - USB devices use the ALSA card and device numbers in the form  "card=X;device=Y"
      * - Other devices may use a number or any other string.
      */
-
+#ifndef ICS_AUDIO_BLOB
     int (*open_output_stream)(struct audio_hw_device *dev,
                               audio_io_handle_t handle,
                               audio_devices_t devices,
@@ -663,11 +668,18 @@ struct audio_hw_device {
                               struct audio_config *config,
                               struct audio_stream_out **stream_out,
                               const char *address);
+#else
+    int (*open_output_stream)(struct audio_hw_device *dev, uint32_t devices,
+                              int *format, uint32_t *channels,
+                              uint32_t *sample_rate,
+                              struct audio_stream_out **out);
+#endif
 
     void (*close_output_stream)(struct audio_hw_device *dev,
                                 struct audio_stream_out* stream_out);
 
     /** This method creates and opens the audio hardware input stream */
+#ifndef ICS_AUDIO_BLOB
     int (*open_input_stream)(struct audio_hw_device *dev,
                              audio_io_handle_t handle,
                              audio_devices_t devices,
@@ -676,6 +688,13 @@ struct audio_hw_device {
                              audio_input_flags_t flags,
                              const char *address,
                              audio_source_t source);
+#else
+    int (*open_input_stream)(struct audio_hw_device *dev, uint32_t devices,
+                             int *format, uint32_t *channels,
+                             uint32_t *sample_rate,
+                             audio_in_acoustics_t acoustics,
+                             struct audio_stream_in **stream_in);
+#endif
 
     void (*close_input_stream)(struct audio_hw_device *dev,
                                struct audio_stream_in *stream_in);
