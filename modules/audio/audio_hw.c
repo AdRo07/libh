@@ -289,13 +289,12 @@ static int adev_set_master_volume(struct audio_hw_device *dev, float volume)
 {
     return -ENOSYS;
 }
-
 #ifndef ICS_AUDIO_BLOB
 static int adev_get_master_volume(struct audio_hw_device *dev, float *volume)
 {
     return -ENOSYS;
 }
-#endif
+
 static int adev_set_master_mute(struct audio_hw_device *dev, bool muted)
 {
     return -ENOSYS;
@@ -305,6 +304,7 @@ static int adev_get_master_mute(struct audio_hw_device *dev, bool *muted)
 {
     return -ENOSYS;
 }
+#endif
 
 static int adev_set_mode(struct audio_hw_device *dev, audio_mode_t mode)
 {

@@ -164,7 +164,6 @@ static int ap_get_stream_volume_index(const struct audio_policy *pol,
 {
     return -ENOSYS;
 }
-
 #ifndef ICS_AUDIO_BLOB
 static int ap_set_stream_volume_index_for_device(struct audio_policy *pol,
                                       audio_stream_type_t stream,
@@ -173,7 +172,6 @@ static int ap_set_stream_volume_index_for_device(struct audio_policy *pol,
 {
     return -ENOSYS;
 }
-#endif
 
 static int ap_get_stream_volume_index_for_device(const struct audio_policy *pol,
                                       audio_stream_type_t stream,
@@ -182,6 +180,7 @@ static int ap_get_stream_volume_index_for_device(const struct audio_policy *pol,
 {
     return -ENOSYS;
 }
+#endif
 
 static uint32_t ap_get_strategy_for_stream(const struct audio_policy *pol,
                                            audio_stream_type_t stream)
